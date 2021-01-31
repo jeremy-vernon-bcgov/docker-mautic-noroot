@@ -74,7 +74,8 @@ COPY ports.conf /etc/apache2/ports.conf
 COPY php.ini /usr/local/etc/php/php.ini
 COPY local.php /var/www/html/app/config/local.php
 COPY mautic.crontab /etc/cron.d/mautic
-
+COPY make-local-config.php /make-local-config.php
+COPY docker-entrypoint.sh /entrypoint.sh
 # Enable Apache Rewrite Module
 RUN a2enmod rewrite
 
@@ -84,8 +85,12 @@ EXPOSE 8080
 # Mod it all to be writable
 RUN chown -R :0 /var/www
 RUN chown -R :0 /usr
-RUN chmod -R g+rwX /usr
+RUN chmod -R g+rwX /usr/local/etc/php
 RUN chmod -R g+rwX /var/www
+
+# Apply necessary permissions
+RUN ["chmod", "+x", "/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["apache2-foreground"]
 
