@@ -84,7 +84,7 @@ EXPOSE 8080
 
 # Mod it all to be writable
 RUN chown -R :0 /var/www
-RUN chown -R :0 /usr
+RUN chown -R :0 /usr/local/etc/php
 RUN chmod -R g+rwX /usr/local/etc/php
 RUN chmod -R g+rwX /var/www
 

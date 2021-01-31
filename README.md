@@ -1,8 +1,14 @@
 # docker-mautic-noroot
-A derivative of docker Mautic intended to run as an arbitrary user.
+A derivative of docker Mautic intended to run as an arbitrary user. Built image is available via artifactory or (my Dockerhub)[https://dockerhub.io/jeremyvernon/docker-mautic-noroot]
 
-Targets Mautic version 3.2
-Uses the Docker php:7.3-apache base image
+- Targets Mautic version 3.2
+- Uses the Docker php:7.3-apache base image
+
+I have included substitute configuration files to:
+1. Reduce run-time mutation of container state
+2. More explicitly capture the desired configuration for running in OCP/K8s.
+
+Thus, php.ini, 000-default.conf and ports.conf are included here and copied into the container - rather than modified by entrypoint.sh.
 
 ## Mautic is ~2/12 factors by default.
 There are numerous design decisions that make running Mautic in a Kuberetes environment something of an configuration nightmare. Here's some coverage by factor
@@ -60,7 +66,7 @@ There are numerous enhancements that should be made:
 
 1. Switch execution context to PHP-FPM
 2. Create a fork of Mautic with downstream modifications for K8s/OpenShift
-3. Rebuild bootstrapping to properly detect need for install step.
+3. (Done-ish) *Rebuild bootstrapping to properly detect need for install step.*
 4. Create a migration to apply install step automatically as-needed.
 5. Replace crontab with cronjob definition YAMLs
-6. Stand-up an on-cluster mailing service that brokers connections external providers, queues sends etc. rather than ad-hoc connections. Maybe [Postal] (https://postal.atech.media/)?
+6. Stand-up an on-cluster mailing service that brokers connections external providers, queues sends etc. rather than ad-hoc connections. Maybe [Postal] (https://postal.atech.media/)? This is useful because we could have many Mautic instances and the mail queue should be shared service.
