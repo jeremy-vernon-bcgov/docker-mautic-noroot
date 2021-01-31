@@ -1,3 +1,4 @@
 #Ignore release package of Mautic
 /mautic/
 /mautic/*
+.DS_Store
