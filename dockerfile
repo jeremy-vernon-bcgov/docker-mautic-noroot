@@ -82,10 +82,10 @@ RUN a2enmod rewrite
 EXPOSE 8080
 
 # Mod it all to be writable
-RUN chown -R :0 /var
+RUN chown -R :0 /var/www
 RUN chown -R :0 /usr
 RUN chmod -R g+rwX /usr
-RUN chmod -R g+rwX /var
+RUN chmod -R g+rwX /var/www
 
 CMD ["apache2-foreground"]
 
