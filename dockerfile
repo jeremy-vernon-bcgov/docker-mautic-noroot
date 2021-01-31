@@ -71,7 +71,6 @@ COPY mautic/ /var/www/html
 # Copy init scripts and custom .htaccess
 COPY 000-default.conf /etc/apache2/sites-enabled/000-default.conf
 COPY ports.conf /etc/apache2/ports.conf
-COPY docker-entrypoint.sh /entrypoint.sh
 COPY php.ini /usr/local/etc/php/php.ini
 COPY local.php /var/www/html/app/config/local.php
 COPY mautic.crontab /etc/cron.d/mautic
@@ -87,12 +86,6 @@ RUN chown -R :0 /var
 RUN chown -R :0 /usr
 RUN chmod -R g+rwX /usr
 RUN chmod -R g+rwX /var
-
-
-# Apply necessary permissions
-RUN ["chmod", "+x", "/entrypoint.sh"]
-ENTRYPOINT ["/entrypoint.sh"]
-
 
 CMD ["apache2-foreground"]
 
