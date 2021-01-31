@@ -1,5 +1,5 @@
 FROM php:7.3-apache
-
+#Taken from the docker-mautic 3x release.
 # Install PHP extensions
 RUN apt-get update && apt-get install --no-install-recommends -y \
     ca-certificates \
